@@ -1,0 +1,16 @@
+name: Check Tests
+
+runs:
+  using: "composite"
+
+steps:
+  - name: Check Tests
+    run: |
+      if npm test; then
+        echo "Tests Passed"
+        echo "::set-output name=tests_passed::true"
+      else
+        echo "Tests Failed"
+        echo "::set-output name=tests_passed::false"
+      fi
+    continue-on-error: true

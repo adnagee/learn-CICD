@@ -16,20 +16,12 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Tests and Check Results
-        id: test
-        run: |
-          if npm test; then
-            echo "Tests Passed"
-            echo "::set-output name=tests_passed::true"
-          else
-            echo "Tests Failed"
-            echo "::set-output name=tests_passed::false"
-          fi
-        continue-on-error: true
+      - name: Check Tests
+        id: check-tests
+        uses: ./.github/actions/check-tests.yml
 
       - name: Build and Deploy (Add your build/deploy steps here)
-        if: steps.test.outputs.tests_passed == 'true'
+        if: steps.check-tests.outputs.tests_passed == 'true'
         run: |
           # Add your build and deploy commands here
           # This step will only run if the tests pass
