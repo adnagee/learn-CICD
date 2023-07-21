@@ -1,0 +1,27 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm test
+        if: ${{ failure() }}
+        # Stops the workflow if the tests fail, preventing code updates
+
+      - name: Build and Deploy (Add your build/deploy steps here)
+        run: |
+
+# Add your build and deploy commands here.  This step will only run if the tests pass
